@@ -14,22 +14,23 @@ public:
   bool is_list_empty();
 
 private:
-  class Node {
-  public:
+  struct _node {
     int value;
-    Node *next_node;
-    Node(const Node &other);
-    Node();
-    Node(int value);
+    struct _node *next_node;
+    _node(const _node &other);
+    _node();
+    _node(int value);
+    _node(int _value, _node *_next_node);
   };
+  typedef struct _node node;
 
   void _display_list();
 
-  Node *starting_node;
-  Node *current_node;
-  Node *last_node;
+  node *starting_node;
+  node *current_node;
+  node *last_node;
 
-  Node *go_to_last_node();
+  node *go_to_last_node();
   void destroy_last_node();
 };
 

@@ -12,19 +12,11 @@ int main() {
   my_linked_list.display_list();
   my_linked_list.add_value(1);
   my_linked_list.display_list();
-  std::cout << "1" << std::endl;
   my_linked_list.add_value(4);
-  std::cout << "8" << std::endl;
-  /*
   my_linked_list.display_list();
-  my_linked_list.add_value(3);
+  my_linked_list.add_value(1);
   my_linked_list.display_list();
-  my_linked_list.add_value(3);
+  my_linked_list.add_value(4);
   my_linked_list.display_list();
-  my_linked_list.add_value(2);
-  my_linked_list.display_list();
-  my_linked_list.add_value(10);
-  my_linked_list.display_list();
-  */
   return 0;
 }

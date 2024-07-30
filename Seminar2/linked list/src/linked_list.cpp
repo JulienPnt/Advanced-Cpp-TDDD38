@@ -17,8 +17,8 @@ Linked_list::~Linked_list() {
   std::cout << "Linked list is destroyed!" << std::endl;
 }
 
-Linked_list::Node *Linked_list::go_to_last_node() {
-  Node *curr_node = this->starting_node;
+Linked_list::node *Linked_list::go_to_last_node() {
+  node *curr_node = this->starting_node;
   while (curr_node != nullptr && curr_node->next_node != nullptr) {
     curr_node = curr_node->next_node;
   }
@@ -30,49 +30,33 @@ int Linked_list::last_value(int *value) {
     std::cerr << "No node into the list" << std::endl;
     return 1;
   }
-  Node *curr_node = this->go_to_last_node();
+  node *curr_node = this->go_to_last_node();
   *value = curr_node->value;
   return 0;
 }
 
 int Linked_list::add_value(int value) {
 
-  std::cout << "2" << std::endl;
   if (this->is_list_empty()) {
-    this->starting_node = new Node;
-    this->starting_node->value = value;
-    this->starting_node->next_node = nullptr;
+    this->starting_node = new node(value);
     return 0;
   } else if (value < this->starting_node->value) {
-    Node *node_mem(this->starting_node);
-    node_mem->value = this->starting_node->value;
-    node_mem->next_node = this->starting_node->next_node;
+    node *node_mem(this->starting_node);
     delete this->starting_node;
-    Node new_node(value);
-    this->starting_node = &new_node;
-    this->starting_node->next_node = node_mem;
+    node *new_node = new node(value, node_mem);
+    this->starting_node = new_node;
     return 0;
   }
-
-  std::cout << "3" << std::endl;
   this->current_node = this->starting_node;
   while (this->current_node != nullptr) {
-    std::cout << "4" << std::endl;
     if (this->current_node->next_node == nullptr) {
-      std::cout << "5" << std::endl;
-      Node new_node(value);
-      std::cout << "6" << std::endl;
-      new_node.next_node = nullptr;
-      std::cout << "7" << std::endl;
-      this->current_node->next_node = &new_node;
+      node *new_node = new node(value);
+      this->current_node->next_node = new_node;
       return 0;
     } else if (this->current_node->next_node->value > value) {
-      Node *node_mem(this->current_node);
-      node_mem->value = this->current_node->next_node->value;
-      node_mem->next_node = this->current_node->next_node->next_node;
-      Node new_node(value);
-      new_node.next_node = node_mem;
-      this->current_node->next_node = &new_node;
+      node *node_mem(this->current_node->next_node);
+      node *new_node = new node(value, node_mem);
+      this->current_node->next_node = new_node;
       return 0;
     }
     this->current_node = this->current_node->next_node;
@@ -106,9 +90,11 @@ bool Linked_list::is_list_empty() { return this->starting_node == nullptr; }
 
 void Linked_list::destroy_last_node() {
   if (this->is_list_empty()) {
+    return;
   } else if (this->starting_node->next_node == nullptr) {
     delete this->starting_node;
     this->starting_node = nullptr;
+    return;
   } else {
     this->current_node = this->starting_node;
     while (this->current_node->next_node->next_node != nullptr) {
@@ -119,10 +105,12 @@ void Linked_list::destroy_last_node() {
   }
 }
 
-Linked_list::Node::Node(const Node &other)
+Linked_list::node::_node(const node &other)
     : value(other.value),
-      next_node(other.next_node ? new Node(*other.next_node) : nullptr) {}
+      next_node(other.next_node ? new node(*other.next_node) : nullptr) {}
 
-Linked_list::Node::Node() : value{0}, next_node(nullptr) {}
+Linked_list::node::_node() : value(0), next_node(nullptr) {}
 
-Linked_list::Node::Node(int _value) : value{_value}, next_node(nullptr) {}
+Linked_list::node::_node(int _value) : value(_value), next_node(nullptr) {}
+Linked_list::node::_node(int _value, node *_next_node)
+    : value(_value), next_node(_next_node) {}

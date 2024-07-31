@@ -9,6 +9,7 @@ public:
   int last_value(int *value);
 
   int add_value(int value);
+  int delete_by_index(const int index);
 
   void display_list();
   bool is_list_empty();

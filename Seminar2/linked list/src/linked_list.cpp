@@ -119,9 +119,9 @@ int Linked_list::delete_by_index(const int index) {
   if (this->is_list_empty()) {
     std::cerr << "The list is empty !" << std::endl;
     return 1;
-  } else if (index == 0 && this->starting_node->next_node == NULL) {
+  } else if (index == 0 && this->starting_node->next_node == nullptr) {
     delete this->starting_node;
-    this->starting_node = NULL;
+    this->starting_node = nullptr;
     return 0;
   } else if (index == 0 && this->starting_node->next_node != nullptr) {
     node *mem_node(this->starting_node->next_node);
@@ -130,8 +130,10 @@ int Linked_list::delete_by_index(const int index) {
     return 0;
   }
   int counter = 0;
+  node *mem_node = nullptr;
   this->current_node = this->starting_node;
   while (counter < index && this->current_node->next_node != nullptr) {
+    mem_node = this->current_node;
     this->current_node = this->current_node->next_node;
     counter++;
   }
@@ -140,11 +142,9 @@ int Linked_list::delete_by_index(const int index) {
     return 1;
   } else if (counter == index && this->current_node->next_node == nullptr) {
     delete this->current_node;
-  } else if (counter == index &&
-             this->current_node->next_node->next_node != nullptr) {
-    node *mem_node(this->current_node->next_node->next_node);
-    delete this->current_node->next_node;
-    this->current_node->next_node = mem_node;
+  } else if (counter == index && this->current_node->next_node != nullptr) {
+    mem_node->next_node = this->current_node->next_node;
+    delete this->current_node;
   } else {
     return 1;
   }

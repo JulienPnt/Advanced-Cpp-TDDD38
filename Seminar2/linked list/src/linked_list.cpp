@@ -137,7 +137,6 @@ int Linked_list::delete_by_index(const int index) {
     this->current_node = this->current_node->next_node;
     counter++;
   }
-
   if (counter != index && this->current_node->next_node == nullptr) {
     return 1;
   } else if (counter == index && this->current_node->next_node == nullptr) {
@@ -149,5 +148,41 @@ int Linked_list::delete_by_index(const int index) {
     return 1;
   }
 
+  return 0;
+}
+
+bool Linked_list::is_occurence_exist(const int value) {
+  if (this->is_list_empty()) {
+    std::cerr << "The list is empty !" << std::endl;
+    return false;
+  }
+  node *curr_node = this->starting_node;
+  while (curr_node != nullptr) {
+    if (curr_node->value == value)
+      return true;
+    curr_node = curr_node->next_node;
+  }
+  return false;
+}
+
+int Linked_list::get_index_of_first_occurrence(const int value) {
+  if (this->is_occurence_exist(value) == false)
+    return -1;
+  node *curr_node = this->starting_node;
+  int index = 0;
+  while (curr_node != nullptr) {
+    if (curr_node->value == value)
+      return index;
+    index++;
+    curr_node = curr_node->next_node;
+  }
+  return -1;
+}
+
+int Linked_list::delete_by_value(const int value) {
+  int index = 0;
+  while ((index = this->get_index_of_first_occurrence(value)) != -1) {
+    this->delete_by_index(value);
+  }
   return 0;
 }

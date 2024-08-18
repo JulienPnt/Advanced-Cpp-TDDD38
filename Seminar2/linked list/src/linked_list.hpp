@@ -10,6 +10,7 @@ public:
 
   int add_value(int value);
   int delete_by_index(const int index);
+  int delete_by_value(const int value);
 
   void display_list();
   bool is_list_empty();
@@ -33,6 +34,8 @@ private:
 
   node *go_to_last_node();
   void destroy_last_node();
+  bool is_occurence_exist(const int value);
+  int get_index_of_first_occurrence(const int value);
 };
 
 #endif
